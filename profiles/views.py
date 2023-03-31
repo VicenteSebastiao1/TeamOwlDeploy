@@ -10,7 +10,7 @@ from profiles.models import UserProfile, Club
 from django.contrib.auth.models import User
 from datetime import timedelta, date
 from django.core.paginator import Paginator
-import simplejson as json
+import  json as simplejason
 from django.db.models import Q
 
 
