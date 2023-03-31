@@ -6,7 +6,7 @@ from django.dispatch import receiver
 
 
 class Club(models.Model):
-    club_name = models.CharField(max_length=30)
+    club_name = models.CharField(max_length=500)
     club_description = models.TextField()
     club_location = models.CharField(max_length=30)
     club_url = models.URLField(default="")
