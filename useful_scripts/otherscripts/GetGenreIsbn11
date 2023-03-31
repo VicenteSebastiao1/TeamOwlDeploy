@@ -1,0 +1,38 @@
+
+import requests
+import csv
+
+# API endpoint
+url = 'https://www.googleapis.com/books/v1/volumes'
+
+# Open the CSV file
+filename = '/Users/vicentesebastiao/Desktop/book-review-dataset/BookRelatedData/BX_Books.csv'
+with open(filename, 'r') as csvfile:
+    reader = csv.DictReader(csvfile)
+
+    # Get the values in the ISBN column
+    isbn_list = [row['isbn'] for row in reader]
+# Create a dictionary to store the genres for each ISBN
+genre_dict = {}
+
+# Loop through the ISBNs and retrieve the genre for each book
+for isbn in isbn_list:
+    # Create a dictionary of parameters to pass to the API
+    params = {'q': 'isbn:{}'.format(isbn)}
+
+    # Send a GET request to the API endpoint
+    response = requests.get(url, params=params)
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Get the JSON data from the response
+        data = response.json()
+
+        # Get the genre for the book, if available
+        genre = data['items'][0]['volumeInfo'].get('categories', [])
+
+        # Add the genre to the dictionary, using the ISBN as the key
+        genre_dict[isbn] = genre
+
+# Print the dictionary of genres
+print(genre_dict)

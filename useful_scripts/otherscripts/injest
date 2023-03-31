@@ -1,0 +1,19 @@
+import pandas as pd
+
+filename = "/Users/vicentesebastiao/Desktop/book-review-dataset/AuthorID.xlsx"
+data = pd.read_excel(filename)
+first_names = data['Unnamed: 1'].values
+last_names = data['Unnamed: 2'].values
+unique = []
+i = -1
+for n1 in first_names:
+    i+=1
+    n2 = last_names[i]
+    if n1 is none or n1 == "nan" or n2 is None or n2 == "nan":
+        continue
+    x = n1 + '-' + n2
+    if x in unique:
+        continue
+    unique.append(x)
+
+print(len(unique))
