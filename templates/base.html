@@ -1,0 +1,441 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<!--    <script src="{% static 'popper.js'%}"></script>-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"/>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+          integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+    />
+
+    <link rel="stylesheet" href="{% static 'main.css' %}"/>
+    <title>Owl</title>
+</head>
+<body class="bg-gray postion-relative">
+<style>
+    .liked{
+        color: #006bb2 !important
+    }
+</style>
+<div class="bg-white d-flex align-items-center fixed-top shadow" style="min-height: 56px; z-index: 5" >
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <!-- search -->
+            <div class="col d-flex align-items-center">
+                <a href="{% url 'homefeed' %}" class="fa-brands fa-earlybirds text-success" style="font-size: 3rem"></a>
+                <!-- search bar -->
+                <div class="input-group ms-2" type="button">
+                    <!-- mobile -->
+                    <span class="input-group-prepend d-lg-none" id="searchMenu" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                        <div class="input-group-text bg-gray border-0 rounded-circle" style="min-height: 40px">
+                            <i class="fas fa-search text-muted"></i>
+                        </div>
+                    </span>
+                    <!-- desktop -->
+                    <span  class="input-group-prepend d-none d-lg-block"  id="searchMenu"  data-bs-toggle="dropdown"  aria-expanded="false"  data-bs-auto-close="outside">
+                        <div class="input-group-text bg-gray border-0 rounded-pill" style="min-height: 40px; min-width: 40px" >
+                            <i class="fas fa-search me-2 text-muted"></i>
+                            <p class="m-0 fs-7 text-muted"></p>
+                            <!-- <input  type="text" class="rounded-pill border-0 bg-gray dropdown-item" placeholder="Rules:Book/Harry;Club/Harry" id="searchbar"/>
+                    <button class="btn btn-success" onclick="search()">Search</button> -->
+                        </div> 
+                    </span>
+                    <!-- search menu -->
+                    <ul  class="dropdown-menu overflow-auto border-0 shadow p-3"  aria-labelledby="searchMenu"  style="width: 20em; max-height: 600px">
+                        <!-- search input -->
+                        <li>
+                            <input  type="text"  class="rounded-pill border-0 bg-gray dropdown-item"  placeholder="Main search is currently unavailable"  autofocus/>
+                        </li>
+                        <!-- search 1 -->
+                        <li class="my-4">
+                            <div class=" alert fade show dropdown-item p-1 m-0 d-flex align-items-center justify-content-betwee" role="alert" >
+                                <div class="d-flex align-items-center">
+                                    <img src="https://source.unsplash.com/random/1" alt="avatar" class="rounded-circle me-2" style="width: 35px; height: 35px; object-fit: cover"/>
+                                    <p class="m-0">Local Search is available in Library, Publishers or Authors Pages</p>
+                                </div>
+                                <button  type="button"  class="btn-close p-0 m-0"  data-bs-dismiss="alert"  aria-label="Close"></button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- nav -->
+            {% block buttons %}
+            <div class="col d-none d-xl-flex justify-content-center" style="display: flex !important;">
+                <div class="mx-4 nav__btn">
+                    <a type="button" class="btn px-4 hide-show" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
+                        <i class="fa-brands fa-sketch position-relative text-muted fs-4"></i>
+                        <i class="text-muted">Newest</i>
+                    </a>
+                </div>
+
+                <!-- Best Icon-->
+                <div class="mx-4 nav__btn nav__btn-success">
+                    <a type="button" class="btn px-4 hide-show" data-toggle="collapse" href="#multiCollapseExample2" role="button" aria-expanded="false" aria-controls="multiCollapseExample2">
+                        <i class="fa-solid fa-medal text-muted fs-4"></i>
+                        <i class="text-muted">Best</i>
+                    </a>
+                </div>
+                <!-- Hot Icon -->
+                <div class="mx-4 nav__btn">
+<!--                    <a type="button" class="btn px-4">-->
+                    <a type="button" class="btn px-4 hide-show" data-toggle="collapse" href="#multiCollapseExample3" role="button" aria-expanded="false" aria-controls="multiCollapseExample3">
+                        <i class="fa-sharp fa-solid fa-fire-flame-curved text-muted fs-4"></i>
+                        <i class="text-muted">Hottest</i>
+                    </a>
+                </div>
+
+                <!-- Rising Icon -->
+                <div class="mx-4 nav__btn">
+<!--                    <a type="button" class="btn px-4">-->
+                    <a type="button" class="btn px-4 hide-show" data-toggle="collapse" href="#multiCollapseExample4" role="button" aria-expanded="false" aria-controls="multiCollapseExample4">
+                        <i class="fa-solid fa-arrow-trend-up text-muted fs-4"></i>
+                        <i class="text-muted">Trending</i>
+                    </a>
+                </div>
+            </div>
+            {% endblock %}
+            <!-- menus -->
+            <div class="col d-flex align-items-center justify-content-end">
+
+<!--                &lt;!&ndash; notifications &ndash;&gt;-->
+<!--                <div class=" rounded-circle p-1 bg-gray d-flex align-items-center justify-content-center mx-2" style="width: 38px; height: 38px" type="button" id="notMenu" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">-->
+<!--                    <i class="fas fa-bell"></i>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; notifications dropdown &ndash;&gt;-->
+<!--                <ul  class="dropdown-menu border-0 shadow p-3"  aria-labelledby="notMenu"  style="width: 23em; max-height: 600px; overflow-y: auto" >-->
+<!--                    &lt;!&ndash; header &ndash;&gt;-->
+<!--                    <li class="p-1">-->
+<!--                        <div class="d-flex justify-content-between">-->
+<!--                            <h2>Notifications</h2>-->
+<!--                            <div class="d-flex" type="button">-->
+<!--                                <p class="rounded-pill bg-gray p-2">All</p>-->
+<!--                                <p class="ms-3 rounded-pill bg-teal-700 p-2 text-white">-->
+<!--                                    Unread-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    &lt;!&ndash; news &ndash;&gt;-->
+<!--                    <div class="d-flex justify-content-between mx-2">-->
+<!--                        <h5></h5>-->
+<!--                        <a href="#" class="text-decoration-none text-success">See All</a>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; news 1 &ndash;&gt;-->
+<!--                    <li class="my-2 p-1">-->
+<!--                        <a href="#" class=" d-flex align-items-center justify-content-evenly text-decoration-none text-dar">-->
+<!--                            <div class="d-flex align-items-center justify-content-evenly">-->
+<!--                                <div class="p-2">-->
+<!--                                    <img src="https://source.unsplash.com/random/1" alt="avatar" class="rounded-circle" style="width: 58px; height: 58px; object-fit: cover"/>-->
+<!--                                </div>-->
+<!--                                <div>-->
+<!--                                    <p class="fs-7 m-0">-->
+<!--                                        A new Club/BritishHistoryBooks has been created by PeterSmith#1424-->
+<!--                                    </p>-->
+<!--                                    <span class="fs-7 text-success">about an hour ago</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <i class="fas fa-circle fs-7 text-success"></i>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+                <!-- secondary menu -->
+                <div  class=" rounded-circle p-1 bg-gray d-flex align-items-center justify-content-center mx-2"  style="width: 38px; height: 38px"  type="button"  id="secondMenu"  data-bs-toggle="dropdown"  aria-expanded="false"  data-bs-auto-close="outside">
+                    <i class="fas fa-caret-down"></i>
+                </div>
+                <!-- secondary menu dd -->
+                <ul class="dropdown-menu border-0 shadow p-3" aria-labelledby="secondMenu" style="width: 23em">
+                    <!-- Profile-->
+                    <!-- Button trigger modal -->
+                    <a href="{% url 'profile' profile_id=user.id %}">
+                        <li class="dropdown-item p-1 d-flex" type="button">
+                                {%  if user_profile_data.picture != 'default.jpg' %}
+                                <img src="/media/{{user_profile_data.picture}}"  alt="avatar"  class="rounded-circle me-2"  style="width: 38px; height: 38px; object-fit: cover"/>
+                                {% else %}
+                                    {% if user_profile_data.sex == 'male' %}
+                                        <img src="{% static 'img/userpictures/default_men.png' %}"  alt="avatar"  class="rounded-circle me-2"  style="width: 38px; height: 38px; object-fit: cover"/>
+                                    {% else %}
+                                        <img src="{% static 'img/userpictures/default_women.png' %}"  alt="avatar"  class="rounded-circle me-2"  style="width: 38px; height: 38px; object-fit: cover"/>
+                                    {% endif %}
+                                {% endif %}
+                            <div>
+                                {% if user.is_authenticated %}
+                                <p class="m-0">{{ user.get_username }}</p>
+                                {% else %}
+                                    <p>ABC.</p>
+                                {% endif %}
+                                <p class="m-0 text-muted">View profile</p>
+                            </div>
+                        </li>
+                    </a>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <!-- Sign out -->
+                    <li class="dropdown-item p-1 my-3 rounded" type="button">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a href="{% url 'logout_user' %}" class="d-flex text-decoration-none text-dark">
+                                    <i class="fas fa-cog bg-gray p-2 rounded-circle"></i>
+                                    <div
+                                            class=" ms-3 d-flex justify-content-between align-items-center w-100">
+                                        <p class="m-0">Sign Out</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= Main ================= -->
+<div class="container-fluid" style="margin-top:50px;">
+    <div class="row justify-content-evenly">
+        <!-- ================= Sidebar ================= -->
+        <div class="col-12 col-lg-3">
+<!--            <div  class="d-none d-xxl-block h-100 fixed-top overflow-hidden scrollbar"  style="max-width: 260px; width: 100%; z-index: 4">-->
+            <div  class=" fixed-top scrollbar"  style="max-width: 160px; width: 100%; z-index: 4; height: 100vh;background-color: beige;" >
+<!--                <ul  class="navbar-nav mt-4 ms-3 d-flex flex-column pb-5 mb-5"  style="padding-top: 56px">-->
+                <ul  class="navbar-nav mt-4 d-flex flex-column"  style="padding-top:35px;">
+                    <!-- top -->
+                    <!-- avatar -->
+                    <li class="dropdown-item p-1 rounded">
+                        <a  href="{% url 'profile' profile_id=user.id %}"  class=" d-flex align-items-center text-decoration-none text-dark fw-bold">
+                            <div class="p-2">
+                                {%  if user_profile_data.picture != 'default.jpg' %}
+                                <img src="/media/{{user_profile_data.picture}}"  alt="avatar"  class="rounded-circle me-2"  style="width: 38px; height: 38px; object-fit: cover"/>
+                                {% else %}
+                                    {% if user_profile_data.sex == 'male' %}
+                                        <img src="{% static 'img/userpictures/default_men.png' %}"  alt="avatar"  class="rounded-circle me-2"  style="width: 38px; height: 38px; object-fit: cover"/>
+                                    {% else %}
+                                        <img src="{% static 'img/userpictures/default_women.png' %}"  alt="avatar"  class="rounded-circle me-2"  style="width: 38px; height: 38px; object-fit: cover"/>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            <div>
+                                <p class="m-0">{{user.username}}</p>
+                            </div>
+                        </a>
+                    </li>
+                    <!-- My club -->
+                    <li class="dropdown-item p-3 rounded">
+                        <a  href="{% url 'myclub' %}"  class=" d-flex align-items-center text-decoration-none text-dark">
+                            <div class="p-3">
+                                <i class="fa-solid fa-house-user"></i>
+                            </div>
+                            <div>
+                                <p class="m-0">My Club</p>
+                            </div>
+                        </a>
+                    </li>
+                    <!-- My posts -->
+                    <li class="dropdown-item p-3 rounded">
+                        <a href="{% url 'myposts' %}" class=" d-flex align-items-center text-decoration-none text-dark">
+                            <div class="p-3">
+                                <i class="fa-solid fa-note-sticky rounded-circle"></i>
+                            </div>
+                            <div>
+                                <p class="m-0">My Posts</p>
+                            </div>
+                        </a>
+                    </li>
+                    <!-- Library -->
+                    <li class="dropdown-item p-3 rounded">
+                        <a href="{% url 'library' %}" class=" d-flex align-items-center text-decoration-none text-dark">
+                            <div class="p-3">
+                                <i class="fa-solid fa-book rounded-circle"></i>
+                            </div>
+                            <div>
+                                <p class="m-0">Library</p>
+                            </div>
+                        </a>
+                    </li>
+                    <!-- Authors -->
+                    <li class="dropdown-item p-3 rounded">
+                        <a href="{% url 'Authors' %}" class=" d-flex align-items-center text-decoration-none text-dark">
+                            <div class="p-3">
+                                <i class="fa-solid fa-pen-nib rounded-circle"></i>
+                            </div>
+                            <div>
+                                <p class="m-0">Authors</p>
+                            </div>
+                        </a>
+                    </li>
+                    <!-- Publishers -->
+                    <li class="dropdown-item p-3 rounded">
+                        <a href="{% url 'Publishers' %}" class=" d-flex align-items-center text-decoration-none text-dark">
+                            <div class="p-3">
+                                <i class="fa-solid fa-clone rounded-circle"></i>
+                            </div>
+                            <div>
+                                <p class="m-0">Publishers</p>
+                            </div>
+                        </a>
+                    </li>
+                    <!-- Reccomendations -->
+                    <li class="dropdown-item p-3 rounded">
+                        <a href="{% url 'recommendations' %}" class=" d-flex align-items-center text-decoration-none text-dark">
+                            <div class="p-3">
+                                <i class="fa-solid fa-star rounded-circle"></i>
+                            </div>
+                            <div>
+                                <p class="m-0">Suggested</p>
+                            </div>
+                        </a>
+                    </li>
+                    <!-- All Clubs  -->
+                    <li class="dropdown-item p-3 rounded">
+                        <a href="{% url 'club_home' %}" class=" d-flex align-items-center text-decoration-none text-dark">
+                            <div class="p-3">
+                                <i class="fa-solid fa-bars"></i>
+                            </div>
+                            <div>
+                                <p class="m-0">All Clubs</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block content %} <!-- At least one html tag is needed to visualise the content!! -->
+<div class=" d-flex flex-column justify-content-centre w-100 mx-auto"
+     style="padding-top: 56px; max-width: 680px">
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == 'error' %}
+<div class="alert alert-danger fade show" style="margin-top:70px;" role="alert">
+    {{message}}
+</div>
+
+{% else %}
+<div class="alert alert-success fade show" style="margin-top:70px;" role="alert">
+    {{message}}
+</div>
+
+{% endif %}
+
+{% endfor %}
+{% endif %}
+    <h1> All the Posts</h1>
+    {% if home %}
+    {% for post in posts %}
+    <h2>{{post.post_title}}</h2>
+    {% endfor %}
+    {% endif %}
+    {% endblock %}
+</div>
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+            crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        setInterval(function(){ $(".alert").fadeOut(); }, 3000);
+    </script>
+<script>
+
+$('.hide-show').click( function(e) {
+    $('.collapse-test').collapse('hide');
+});
+</script>
+<script>
+    $(".like").click(function(event) {
+        var dataLike = event.target.className
+        const temp_data = dataLike.split(" ")[2].split("-")
+
+        $.ajax({
+            url: "{% url 'like_dislike_ajax_view' %}",
+            type: "GET",
+            data:{
+                post_id:temp_data[0],
+                status:temp_data[1],
+            },
+            success: function(graph_response, xhr){
+                var total_likes = Number(document.getElementById(`counter-${temp_data[0]}`).classList[1])
+                const changing_class_id = 'post-' + temp_data[0]
+                if (temp_data[1]=='1') {
+                    var new_total_likes = total_likes+1
+                    var temp_status_changer = "0"
+
+                    element_4 = document.querySelectorAll(`[id='dyno-like-${temp_data[0]}']`);
+                    for(var i = 0; i < element_4.length; i++){
+                        element_4[i].classList.add("liked");
+                    }
+
+                }
+                else {
+                    var new_total_likes = total_likes-1
+                    var temp_status_changer = "1"
+
+                    element_4 = document.querySelectorAll(`[id='dyno-like-${temp_data[0]}']`);
+                    for(var i = 0; i < element_4.length; i++){
+                        element_4[i].classList.remove("liked");
+                        }
+
+                }
+
+                const element_1 =  document.querySelectorAll(`[id='counter-${temp_data[0]}']`);
+                for(var i = 0; i < element_1.length; i++){
+                    element_1[i].classList.remove(total_likes)
+                    element_1[i].classList.add(new_total_likes)
+                }
+                element_2 = document.querySelectorAll(`[id='counter-${temp_data[0]}-likes']`);
+                for(var i = 0; i < element_2.length; i++){
+                    element_2[i].innerHTML = new_total_likes +" Likes "
+                    element_2[i].classList = "m-0 like " + temp_data[0] + "-" + temp_status_changer;
+                }
+
+                element_3 = document.querySelectorAll(`[id='${changing_class_id}']`);
+                for(var i = 0; i < element_3.length; i++){
+                    element_3[i].classList = "m-0 like " + temp_data[0] + "-" + temp_status_changer;
+                }
+
+            }
+        });
+    });
+</script>
+<!-- 
+</body>
+<script
+   src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+   integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+   crossorigin="anonymous"
+ ></script>
+                     <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+                     <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+                     <script>
+                         function search() {
+                             var text=$("#searchbar").val()
+                             var searchType=text.split("/")[0]
+                             var searchContent=text.split("/")[1]
+                             if (searchContent){
+                                 if(searchType==="Book"){
+                                     window.location.href="/getBookByName?name="+searchContent
+                                 }
+                                 else if(searchType==="Club"){
+                                     window.location.href="/getClubByName?name="+searchContent
+                                 }
+                                 else {alert("Error Input Type")}
+                             }else {
+                                 alert("Error input2")
+
+                             }
+                         }
+                     </script>
+</html> -->
+
